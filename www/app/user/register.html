@@ -1,0 +1,120 @@
+﻿ <ion-pane>
+
+      <ion-header-bar class="bar-stable">
+        <button class="button" ui-sref="login">Geri</button>
+        <h1 class="title">Kullanıcı Kaydı</h1>
+      </ion-header-bar>
+
+      <ion-content>
+        <div class="list">
+            <div class="item item-divider item-positive">Müşteri Tipi</div>
+            <ion-radio ng-repeat="item in customerTypes"
+                       ng-value="item.value"
+                       ng-model="profileData.customerType.value">
+                {{ item.text }}
+            </ion-radio>
+        </div>
+
+        <!-- kişi bilgileri -->
+        <div class="list" ng-show="profileData.customerType.value == 0">
+            <div class="item item-divider item-positive">Kişi Bilgileri</div>
+            <label class="item item-input">
+                <span class="input-label">TC Kimlik No</span>
+                <input type="text" ng-model="profileData.tckno" validatr="required" />
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Ad</span>
+                <input type="text" ng-model="profileData.ad" validatr="required" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Soyad</span>
+                <input type="text" ng-model="profileData.soyad" validatr="required" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Doğum Tarihi</span>
+                <input type="date" ng-model="profileData.dogumTarihi" />
+            </label>
+        </div>
+          
+        <!-- firma bilgileri -->
+        <div class="list" ng-show="profileData.customerType.value == 1">
+            <div class="item item-divider item-positive">Firma Bilgileri</div>
+            <label class="item item-input">
+                <span class="input-label">Vergi Kimlik No</span>
+                <input type="text" ng-model="profileData.vergiNo" />
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Ünvan</span>
+                <input type="text" ng-model="profileData.unvan" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Yetkili Adı</span>
+                <input type="text" ng-model="profileData.yetkiliAdi" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Yetkili Soyadı</span>
+                <input type="text" ng-model="profileData.yetkiliSoyadi" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Vergi Dairesi</span>
+                <input type="text" ng-model="profileData.vergiDairesi" />
+            </label>
+        </div>
+
+        <!-- iletişim bilgileri -->
+        <div class="list">
+            <div class="item item-divider item-positive">İletişim</div>
+            <label class="item item-text-wrap positive">
+                E-Posta adresiniz kullanıcı adınız olarak kullanılacaktır.
+            </label>
+            <label class="item item-input">
+                <span class="input-label">E-Posta</span>
+                <input type="text" ng-model="profileData.email" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Cep Telefonu</span>
+                <input type="text" ng-model="profileData.cepTelefonu" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Sabit Telefon</span>
+                <input type="text" ng-model="profileData.sabitTelefon" />
+            </label>
+        </div>
+
+        <!-- parola -->
+        <div class="list">
+            <div class="item item-divider item-positive">Parola</div>
+            <label class="item item-input">
+                <span class="input-label">Kullanıcı Adı</span>
+                <span> {{ profileData.email }} </span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Parola</span>
+                <input type="password" ng-model="profileData.password" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Parola Tekrar</span>
+                <input type="password" ng-model="profileData.password2" />
+            </label>
+        </div>
+
+        <!-- sözleşme -->
+        <div class="list">
+            <div class="item item-divider item-positive">Kullanıcı Sözleşmesi</div>
+            <div class="item">
+                <ion-checkbox ng-model="sozlesmeOnay">
+                    Kullanıcı Sözleşmesini <br />
+                    okudum ve kabul ettim
+                </ion-checkbox>
+            </div>
+            <div class="item">
+                <a href="#" class="button button-block" ng-click="showSozlesme()">Kullanıcı Sözleşmesi</a>
+            </div>
+        </div>
+
+        <a class="button button-dark bar" ng-click="doRegister(profileData)">Kayıt Ol</a>
+
+    </ion-content>
+</ion-pane>

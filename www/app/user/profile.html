@@ -1,0 +1,89 @@
+﻿<ion-view view-title="Profilim" ng-controller="ProfileCtrl">
+    <ion-content padding="true" class="has-header">
+
+        <!-- kişi bilgileri -->
+        <div class="list" ng-show="profileData.customer_type_ID == 0">
+            <div class="item item-divider item-positive">Kişi Bilgileri</div>
+            <label class="item item-input">
+                <span class="input-label">TC Kimlik No</span>
+                <input type="text" ng-model="profileData.tckimlikno" />
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Ad</span>
+                <input type="text" ng-model="profileData.firstname" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Soyad</span>
+                <input type="text" ng-model="profileData.lastname" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Doğum Tarihi</span>
+                <input type="date" ng-model="profileData.birthday" />
+            </label>
+        </div>
+
+        <!-- firma bilgileri -->
+        <div class="list" ng-show="profileData.customer_type_ID == 1">
+            <div class="item item-divider item-positive">Firma Bilgileri</div>
+            <label class="item item-input">
+                <span class="input-label">Vergi Kimlik No</span>
+                <input type="text" ng-model="profileData.vergiNo" />
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Ünvan</span>
+                <input type="text" ng-model="profileData.unvan" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Ünvan Devam</span>
+                <input type="text" ng-model="profileData.unvan2" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Yetkili Adı</span>
+                <input type="date" ng-model="profileData.yetkiliAdi" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Vergi Dairesi</span>
+                <input type="text" ng-model="profileData.vergiDairesi" />
+            </label>
+        </div>
+
+        <!-- iletişim bilgileri -->
+        <div class="list">
+            <div class="item item-divider item-positive">İletişim</div>
+            <label class="item item-input">
+                <span class="input-label">E-Posta</span>
+                <input type="email" ng-model="profileData.email" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Cep Telefonu</span>
+                <input type="email" ng-model="profileData.mobilephone" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Sabit Telefon</span>
+                <input type="email" ng-model="profileData.phone1" />
+            </label>
+        </div>
+
+        <!-- parola bilgileri -->
+        <div class="list">
+            <div class="item item-divider item-positive">Parola Değiştir</div>
+            <label class="item item-input">
+                <span class="input-label">Önceki Parola</span>
+                <input type="password" ng-model="profileData.oldPassword" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Yeni Parola</span>
+                <input type="password" ng-model="profileData.newPassword" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Yeni Parola Tekrar</span>
+                <input type="password" ng-model="profileData.newPassword2" />
+            </label>
+        </div>
+
+        <a class="button button-block button-dark">Bilgileri Güncelle</a>
+
+    </ion-content>
+</ion-view>

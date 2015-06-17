@@ -1,0 +1,37 @@
+﻿<ion-view view-title="Hasar Anında" ng-controller="HasarCtrl">
+  <ion-content>
+       
+    <div class="list">
+            <a class="item item-icon-left item-icon-right">
+                <i class="icon ion-wrench"></i>
+                Hasar anında ne yapmalıyım?
+                <i class="icon ion-chevron-right"></i>
+            </a>
+    </div>
+
+
+    <div class="list">
+        <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" placeholder="ara..." ng-model="searchText">
+        </label>
+
+        <a class="item item-button-right" 
+           ng-repeat="item in servisler | filter:searchText"
+            
+            <h2>{{item.Name}}</h2>
+            <p class="wrap">{{item.Adress}}</p>
+
+            <button class="button button button-positive"
+                    ng-click="call(item.Telephone)">
+                <i class="icon ion-ios-telephone"></i>
+            </button>
+
+            <!--
+            <button class="button button button-balanced icon-left ion-ios-email"
+                    ng-click="mail(item.Email)"></button>
+            -->
+        </a>
+    </div>
+  </ion-content>
+</ion-view>

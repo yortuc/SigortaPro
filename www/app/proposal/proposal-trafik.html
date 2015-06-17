@@ -1,0 +1,415 @@
+﻿<ion-view title="Trafik" ng-controller="ProposalTrafikCtrl as vm">
+    <ion-content padding="true" class="has-header has-footer">
+           
+        <!-- //////////////////////////////// FAZ 1 //////////////////////////////// -->
+
+        <!-- sigortalı türü -->
+        <div class="list">
+            <div class="item item-divider item-positive">Sigortalı Türü</div>
+            <ion-radio ng-repeat="item in sigortaliTurleri"
+                       ng-value="item.value"
+                       ng-model="data.plakaData.sigortaliTuru.value"
+                       ng-change="sigortaliTuruChange(item)"
+                       name="sigortali-tur">
+                {{ item.text }}
+            </ion-radio>
+
+            <label class="item">
+                <input type="text" placeholder="TC Kimlik No" ng-model="data.plakaData.sigortaliTck">
+            </label>
+        </div>
+
+        <!-- plaka durumu -->
+        <div class="list">
+            <div class="item item-divider item-positive">Plaka Durumu</div>
+            <ion-radio ng-repeat="item in plakaDurumlari"
+                       ng-value="item.value"
+                       ng-model="data.plakaDurumu.value"
+                       ng-change="plakaDurumuChange(item)"
+                       name="plaka-durum">
+                {{ item.text }}
+            </ion-radio>
+        </div>
+
+        <div class="list" ng-show="data.plakaDurumu.value">
+            <div class="item item-divider item-positive">Plaka</div>
+            <div class="item">
+                <select ng-model="data.plakaData.plakaIl" 
+                        ng-options="item.ParameterName for item in iller track by item.ParameterValue">
+                </select>
+            </div>
+             <label class="item item-input">
+                <input type="text" ng-model="data.plakaData.plaka" 
+                                   placeholder="Plaka (örnek: AD 145)">
+            </label>
+        </div>
+
+        <!-- EGM bilgileri -->
+        <div class="list">
+            <div class="item item-divider item-positive">Araç Tescil Bilgileri Var mı?</div>
+            <ion-radio ng-repeat="item in egmBilgiDurumlari"
+                       ng-value="item.value"
+                       ng-model="data.egmBilgiDurumu.value"
+                       ng-change="egmBilgiDurumChange(item)">
+                {{ item.text }}
+            </ion-radio>
+
+            <!-- asbis no -->
+            <div ng-show="data.egmBilgiDurumu.value">
+                <ion-toggle toggle-class="toggle-positive" ng-model="data.asbisNoMu">Asbis No Mu?</ion-toggle>
+                <label class="item" ng-hide="data.asbisNoMu">
+                    <input type="text" placeholder="Tescil Seri Kod" ng-model="data.plakaData.tescilSeriKod">
+                </label>
+                <label class="item" ng-hide="data.asbisNoMu">
+                    <input type="text" placeholder="Tescil Seri Numarası" ng-model="data.plakaData.tescilSeriNumarasi">
+                </label>
+                <label class="item" ng-show="data.asbisNoMu">
+                    <input type="text" placeholder="Asbis No" ng-model="data.asbisNo">
+                </label>
+            </div>
+        </div>
+
+        <button class="button button-stable button-block" 
+                ng-click="doTramerQuery(data.plakaData)"
+                ng-hide="data.detay"> 
+            Tramer'den Sorgula
+        </button>
+
+
+        <!-- //////////////////////////////// FAZ 2 //////////////////////////////// -->
+
+        <!-- ********************************* ARAÇ ********************************* -->
+        <div class="list" ng-show="data.detay">
+            <div class="item item-divider item-balanced">Araç Bilgileri</div>
+
+            <label class="item">
+                <input type="text" placeholder="Motor Numarası" ng-model="data.motorNumarasi">
+            </label>
+
+            <label class="item">
+                <input type="text" placeholder="Şasi Numarası" ng-model="data.sasiNumarasi">
+            </label>
+
+            <!-- araç sınıfı -->
+            <label class="item item-input item-select">
+                <span class="input-label">Araç Sınıfı</span>
+                <select ng-model="data.aracSinifi"
+                        ng-options="item.ParameterName for item in aracSiniflari track by item.ParameterValue"
+                        ng-change="aracSinifiChange(data.aracSinifi)"></select>
+            </label>
+
+            <!-- araç kullanım şekli -->
+            <label class="item item-input item-select">
+                <span class="input-label">Araç Kullanım Şekli</span>
+                <select ng-model="data.aracKullanimSekli"
+                        ng-options="item.ParameterName for item in aracKullanimSekilleri track by item.ParameterValue">
+                </select>
+            </label>
+
+            <!-- KAMYONET için kasa tipi -->
+            <label ng-show="aracKamyonet" class="item item-input item-select">
+                <span class="input-label">Kasa Tipi</span>
+                <select ng-model="data.kasaTipi"
+                        ng-options="item.ParameterName for item in kasaTipleri track by item.ParameterValue">
+                </select>
+            </label>
+            
+            <!-- araç alt sınıfı -->
+            <label class="item item-input item-select">
+                <span class="input-label">Araç Alt Sınıfı</span>
+                <select ng-model="data.aracAltSinifi"
+                        ng-options="item.ParameterName for item in aracAltSiniflari"
+                        ng-change="aracAltSinifiChange(data.aracAltSinifi)"></select>
+            </label>
+
+            <!-- araç markası -->
+            <label class="item item-input item-select">
+                <span class="input-label">Araç Markası</span>
+                <select ng-model="data.aracMarkasi"
+                        ng-options="item.ParameterName for item in aracMarkalari track by item.ParameterValue"
+                        ng-change="aracMarkasiChange(data.aracMarkasi)"></select>
+            </label>
+            
+            <!-- araç yılı -->
+            <label class="item item-input item-select">
+                <span class="input-label">Araç Yılı</span>
+                <select ng-model="data.aracYili"
+                        ng-options="item for item in aracYillari track by item"
+                        ng-change="aracYiliChange(data.aracMarkasi, data.aracYili)"></select>
+            </label>
+
+            <!-- araç modeli -->
+            <label class="item item-input item-select">
+                <span class="input-label">Araç Modeli</span>
+                <select ng-model="data.aracModeli"
+                        ng-options="item.Model for item in aracModelleri track by item.ModelCode"
+                        ng-change="aracModeliChange(data.aracMarkasi, data.aracModeli, data.aracYili)">
+                </select>
+            </label>
+
+             <!-- kişi sayısı -->
+            <label class="item item-input item-select">
+                <span class="input-label">Koltuk Sayısı</span>
+                <select ng-model="data.kisiSayisi"
+                        ng-options="item.text for item in kisiSayilari">
+                </select>
+            </label>
+
+            <!-- tescil tarihi -->
+            <label class="item item-input">
+                <span class="input-label">Tescil Tarihi</span>
+                <input type="date" ng-model="data.tescilTarihi">
+            </label>
+
+            <!-- trafiğe çıkış tarihi -->
+            <label ng-show="tramerVar" class="item item-input">
+                <span class="input-label">Trafiğe Çıkış Tarihi</span>
+                <input type="date" ng-model="data.trafigeCikisTarihi">
+            </label>
+
+            <!-- araç bedeli -->
+            <label class="item item-input">
+                <span class="input-label">Araç Bedeli</span>
+                <input type="number" placeholder="Araç Bedeli" ng-model="data.aracBedeli" disabled />
+            </label>
+
+            <!-- onarım yapılacak servis -->
+            <label class="item item-input item-select item-text-wrap">
+                <span class="input-label">Onarım Yapılacak Servis</span>
+                <select ng-model="data.onarimYapilacakServis"
+                        ng-options="item.ParameterName for item in onarimYapilacakServisler track by item.ParameterValue">
+                </select>
+            </label>
+
+            <!-- yedekparça türü -->
+            <label class="item item-input item-select item-text-wrap">
+                <span class="input-label">Yedekparça Türü</span>
+                <select ng-model="data.yedekParcaTuru"
+                        ng-options="item.ParameterName for item in yedekParcaTurleri track by item.ParameterValue">
+                </select>
+            </label>
+
+            <!-- kullanım esası -->
+            <label class="item item-input item-select item-text-wrap">
+                <span class="input-label">Kullanım Esası</span>
+                <select ng-model="data.kullanimEsasi"
+                        ng-options="item.ParameterName for item in kullanimEsaslari track by item.ParameterValue">
+                </select>
+            </label>
+        </div>
+
+        <!-- ********************************* EK TAMİNAT ********************************* -->
+        <div class="list" ng-show="data.detay">
+            <div class="item item-divider item-balanced">Ek Teminat</div>
+
+            <ion-toggle ng-show="aracKamyonet" 
+                        ng-model="data.kasaSigortasi">
+                Kasa Sigortası İstiyorum
+            </ion-toggle>
+
+            <label ng-show="data.kasaSigortasi" class="item item-input">
+                <span class="input-label">Kasa Bedeli</span>
+                <input type="number" ng-model="data.kasaBedeli">
+            </label>
+
+            <ion-toggle class="item-text-wrap" 
+                        ng-show="aracKamyonet" 
+                        ng-model="data.yurtIciTasTemMaliSorumluluk">
+                Yurtiçi Taşıt Teminatı Mali Sorumluluk
+            </ion-toggle>
+
+            <ion-toggle class="item-text-wrap" 
+                        ng-show="aracKamyonet" 
+                        ng-model="data.tasinanYukTeminati">
+                Taşınan Yük Teminatı
+            </ion-toggle>
+            
+            <label ng-show="data.tasinanYukTeminati" class="item item-input item-select item-text-wrap">
+                <span class="input-label">Taşınan Yük Teminat Tipi</span>
+                <select ng-model="data.tasinanYukTeminatTipi"
+                        ng-options="item.ParameterName for item in tasinanYukTeminatTipleri track by item.ParameterValue">
+                </select>
+            </label>
+
+            <ion-toggle ng-show="aracKamyonet" 
+                        ng-model="data.kiralikArac">
+                Kiralık Araç
+            </ion-toggle>
+
+            <item ng-show="aracKamyonet" class="item item-divider"></item>
+
+            <ion-toggle ng-model="data.anahtarIleCalinma">Anahtar İle Çalınma</ion-toggle>
+            <ion-toggle ng-model="data.tedaviMasraflari">Tedavi Masrafları</ion-toggle>
+            <ion-toggle ng-model="data.yeniDegerKlozu">Yeni Değer Klozu</ion-toggle>
+            
+            <ion-toggle ng-model="data.lpgliArac">LPG'li Araç</ion-toggle>
+            <ion-toggle ng-model="data.lpgFabrikaCikisli" ng-show="data.lpgliArac">LPG Fabrika Çıkışlı Mı?</ion-toggle>
+            <label ng-show="data.lpgliArac && !data.lpgFabrikaCikisli" class="item item-input item-text-wrap">
+                <span class="input-label">LPG Bedeli</span>
+                <input type="number" ng-model="data.lpgBedeli">
+            </label>
+
+            <ion-toggle ng-show="aracHususi" 
+                        ng-model="data.engelliAraci">
+                Engelli Aracı
+            </ion-toggle>
+
+            <ion-toggle ng-model="data.surucuKursuAraci">Sürücü Kursu Aracı</ion-toggle>
+
+            <ion-toggle ng-model="data.saglikTeminati">Sağlık Teminatı</ion-toggle>
+            <label ng-show="data.saglikTeminati" class="item item-input item-text-wrap">
+                <span class="input-label">Sağlık Teminatı Kişi Sayısı</span>
+                <input type="number" ng-model="data.saglikTeminatiKisiSayisi">
+            </label>
+
+            <ion-toggle ng-model="data.kilitSistemi">Kilit Sistemi</ion-toggle>
+
+            <!-- yurtdışı teminatı -->
+            <ion-toggle ng-model="data.yurtdisiTeminati">Yurtdışı Teminatı</ion-toggle>
+            <label ng-show="data.yurtdisiTeminati" class="item item-input">
+                <span class="input-label">Yurtdışı Teminat Süresi</span>
+                <input type="number" ng-model="data.yurtDisiTeminatSuresi">
+            </label>
+            <label ng-show="data.yurtdisiTeminati" class="item item-input item-text-wrap">
+                <span class="input-label">Yurtdışı Teminat Başlangıç Tarihi</span>
+                <input type="date" ng-model="data.yurtDisiTeminatBaslangicTarihi">
+            </label>
+            <label ng-show="data.yurtdisiTeminati" class="item item-input item-text-wrap">
+                <span class="input-label">Yurtdışı Teminat Başlangıç Tarihi</span>
+                <input type="date" ng-model="data.yurtDisiTeminatBitisTarihi">
+            </label>
+
+            <ion-toggle ng-model="data.kazaDestek">Kaza Destek</ion-toggle>
+            <ion-toggle ng-model="data.hasarsizlikTeminati">Hasarsızlık Koruma Teminatı</ion-toggle>
+            <ion-toggle ng-model="data.operasyonelKiralik">Operasyonel Kiralık</ion-toggle>
+            
+            <ion-toggle ng-show="aracMinibus || aracKamyonet" 
+                        ng-model="data.kullanimGelirKaybi">
+                Kullanım Gelir Kaybı
+            </ion-toggle>
+
+            <div class="item item-divider"></div>
+
+            <!-- ses sistemi -->
+            <ion-toggle ng-model="data.sesSistemi">Ses Sistemi Eklenmiş mi?</ion-toggle>
+            <label class="item item-input" ng-show="data.sesSistemi">
+                <span class="input-label">Marka</span>
+                <input type="text" placeholder="Ses Sistemi Markası" ng-model="data.sesSistemiMarka">
+            </label>
+            <label class="item item-input" ng-show="data.sesSistemi">
+                <span class="input-label">Bedel</span>
+                <input type="text" placeholder="Ses Sistemi Bedeli" ng-model="data.sesSistemiBedel">
+            </label>
+
+            <!-- görüntü sistemi -->
+            <ion-toggle ng-model="data.goruntuSistemi">Görüntü Sistemi Eklenmiş mi?</ion-toggle>
+            <label class="item item-input" ng-show="data.goruntuSistemi">
+                <span class="input-label">Marka</span>
+                <input type="text" placeholder="Görüntü Sistemi Markası" ng-model="data.goruntuSistemiMarka">
+            </label>
+            <label class="item item-input" ng-show="data.goruntuSistemi">
+                <span class="input-label">Bedel</span>
+                <input type="text" placeholder="Görüntü Sistemi Bedeli" ng-model="data.goruntuSistemiBedel">
+            </label>
+
+            <!-- diğer aksesuar -->
+            <ion-toggle ng-model="data.digerAksesuar">Diğer Aksesuar Var mı?</ion-toggle>
+            <label class="item item-input" ng-show="data.digerAksesuar">
+                <span class="input-label">Marka</span>
+                <input type="text" placeholder="Marka" ng-model="data.digerAksesuarMarka">
+            </label>
+            <label class="item item-input" ng-show="data.digerAksesuar">
+                <span class="input-label">Bedel</span>
+                <input type="text" placeholder="Bedel" ng-model="data.digerAksesuarBedel">
+            </label>
+            
+            <div class="item item-divider"></div>
+            
+            <!-- iim -->
+            <label class="item item-input item-select">
+                <span class="input-label">İhtiyari mali mesutliyet (İMM)</span>
+                <select ng-model="data.iim"
+                    ng-options="item.ParameterName for item in IIMler">
+                </select>
+            </label>
+
+            <!-- fk -->
+            <label class="item item-input item-select">
+                <span class="input-label">Ferdi kaza (FK)</span>
+                <select ng-model="data.ferdiKaza"
+                        ng-options="item.ParameterName for item in FKlar">
+                </select>
+            </label>
+        </div>
+
+        <!-- ********************** SİGORTALI BİLGİLERİ *************************-->
+        <div class="list" ng-show="data.detay">
+            <div class="item item-divider item-balanced">Sigortalı Bilgileri</div>
+
+            <label class="item item-input item-select item-text-wrap">
+                <span class="input-label">Müşteri Bağlantı Tipi</span>
+                <select ng-model="data.musteriBaglantiTipi"
+                        ng-options="item.ParameterName for item in musteriBaglantiTipleri">
+                </select>
+            </label>
+
+            <label class="item item-input item-select item-text-wrap">
+                <span class="input-label">Müşteri Bağlantılı Kurum</span>
+                <select ng-model="data.musteriBaglantiliKurum"
+                        ng-options="item.ParameterName for item in musteriBaglantiliKurumlar">
+                </select>
+            </label>
+            
+            <label class="item item-input item-select item-text-wrap">
+                <span class="input-label">İkametgah İli</span>
+                <select ng-model="data.sigortaliIl"
+                        ng-options="item.ParameterName for item in iller"
+                        ng-change="ikametgahIlChange(data.sigortaliIl)">
+                </select>
+            </label>
+
+            <label class="item item-input item-select item-text-wrap">
+                <span class="input-label">İkametgah İlçesi</span>
+                <select ng-model="data.sigortaliIlce"
+                        ng-options="item.TownName for item in ilceler">
+                </select>
+            </label>
+
+            <label class="item item-input item-select item-text-wrap">
+                <span class="input-label">Telefon</span>
+                <input type="number" ng-model="data.sigortaliTelefon" />
+            </label>
+
+            <label class="item item-input item-select item-text-wrap">
+                <span class="input-label">Ehliyet Alma Tarihi</span>
+                <input type="date" ng-model="data.ehliyetAlmaTarihi" />
+            </label>
+
+            <label ng-show="sigortaliGercek" 
+                   class="item item-input item-select item-text-wrap">
+                <span class="input-label">Meslek</span>
+                <select ng-model="data.sigortaliMeslek"
+                        ng-options="item.ParameterName for item in meslekler track by item.ParameterValue">
+                </select>
+            </label>
+
+            <label ng-show="yillikKullanim"
+                   class="item item-input item-select item-text-wrap">
+                <span class="input-label">Yıllık Kullanım (KM)</span>
+                <input type="number" ng-model="data.yillikKullanimKm" />
+            </label>
+        </div>
+
+        <!-- ********************************* DİĞER ********************************* -->
+        <div class="list" ng-show="data.detay">
+            <div class="item item-divider item-positive">Diğer Teminatlar</div>
+            
+            <label class="item item-input">
+                <span class="input-label">Yeni Poliçe Başlangıç Tarhi</span>
+                <input type="date" ng-model="data.yeniPoliceBaslangicTarihi">
+            </label>
+        </div>
+
+        <a ng-show="data.detay" class="button button-dark bar" ng-click="doGetProposalQuery(data)">Teklif Al</a>
+    </ion-content>
+</ion-view>

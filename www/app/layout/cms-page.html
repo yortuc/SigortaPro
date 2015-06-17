@@ -1,0 +1,20 @@
+﻿<ion-view view-title="" ng-controller="CmsPageCtrl">
+  <ion-content>
+       
+      <div class="list">
+        <a class="item item-icon-right" 
+           ng-repeat="item in subMenus"
+           ui-sref="app.cms({ menuId: item.id })">
+            {{ item.title }}
+            <i class="icon ion-chevron-right"></i>
+        </a>
+      </div>
+
+      <div class="card">
+          <div class="item item-text-wrap">
+            <span ng-bind-html="menu.content.html"></span>
+          </div>
+      </div>
+
+  </ion-content>
+</ion-view>

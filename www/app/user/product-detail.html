@@ -1,0 +1,39 @@
+﻿<ion-view title="{{ kategori }}" ng-controller="ProductDetailCtrl as vm">
+    <ion-content padding="true" class="has-header has-footer">
+        
+        <div class="list">
+            <a class="item item-icon-right" href="#/app/nearest/1">
+                En Yakın Servis Noktaları
+                <i class="icon ion-chevron-right"></i>
+            </a>
+        </div>
+
+        <div class="list">
+            <div class="card" ng-repeat="p in products">
+                <div class="item item-divider">
+                    {{ p.sirket_adi }}
+                </div>
+                <div class="item item-text-wrap">
+                    <div class="row">
+                        <div class="col">Poliçe No</div>
+                        <div class="col">{{ p.sales_ID }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Vade Sonu</div>
+                        <div class="col">{{ p.insurance_end | filtreTarih | date: 'd/M/yyyy' }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="list" ng-show="products.length == 0">
+            <div class="item">
+                Poliçeniz bulunmamaktadır. 
+
+                <button ng-click="teklifAl()"
+                        class="button button-block button-positive">Teklif Al</button>
+            </div>
+        </div>      
+
+    </ion-content>
+</ion-view>

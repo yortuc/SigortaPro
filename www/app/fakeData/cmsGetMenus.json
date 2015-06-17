@@ -1,0 +1,42 @@
+﻿{
+	"Status":1,
+	"Description":"CMS GET MENUS",
+	"Data": [
+		{
+			"id": 1, 
+			"parentId": 0, 
+			"title": "Ana Menü 1",
+			"content": {
+				"title": "Ana Menü-1 Başlık",
+				"html": "Ana Menü-1 <br/> <b>Zengin</b> <a href='#'>metin</a> içerik<br/><br/> <img src='http://hgs.gen.tr/wp-content/uploads/2014/12/kasko-police-sorgulama.jpg'>"
+			}
+		},
+		{
+			"id": 2, 
+			"parentId": 1, 
+			"title": "Alt Menü 1-1",
+			"content": {
+				"title": "Alt Menü 1-1 Başlık",
+				"html": "Alt Menü 1-1 içerik"
+			}
+		},
+		{
+			"id": 3, 
+			"parentId": 1, 
+			"title": "Alt Menü 1-2",
+			"content": {
+				"title": "Alt Menü 1-2 Başlık",
+				"html": "Alt Menü 1-2 içerik"
+			}
+		},
+		{
+			"id": 4, 
+			"parentId": 0, 
+			"title": "Ana Menü 2",
+			"content": {
+			"title": "Ana Menü 2 Başlık",
+			"html": "Ana Menü-2 içerik"
+			}
+		}
+	]
+}

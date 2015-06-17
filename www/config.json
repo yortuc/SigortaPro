@@ -1,0 +1,27 @@
+{
+	"config_version": "4",
+	"name": "sgp2",
+	"author": "fatih.acer@acerpro.com.tr",
+	"version": "0.1",
+	"platform_version": "v2.2.7",
+	"description": "An empty app created by default",
+	"core": {
+		"general": {
+			"logging": {
+				"level": "DEBUG"
+			},
+			"reload": true
+		},
+		"ios": {
+			"package_name": "com.sigortapromobil.*"
+		}
+	},
+	"modules": {
+		"request": {
+			"version": "2.6",
+			"config": {
+				"permissions": []
+			}
+		}
+	}
+}

@@ -1,0 +1,19 @@
+﻿<ion-view title="Varlıklarım" ng-controller="AssetsCtrl as vm">
+    <ion-nav-buttons side="right">
+      <button class="button button-clear button-positive" ng-click="addAsset()">
+        Ekle
+      </button>
+    </ion-nav-buttons>
+
+    <ion-content padding="true" class="has-header has-footer">
+
+        <div class="list">
+            
+            <div class="item row" ng-repeat="a in assets">
+                <div class="col">{{ a.AssetName }}</div>
+                <div class="col col-25">{{ a.AssetType }}</div>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>

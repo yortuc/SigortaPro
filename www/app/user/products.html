@@ -1,0 +1,26 @@
+﻿<ion-view view-title="Poliçelerim" ng-controller="ProductsCtrl as vm">
+  <ion-content>
+
+    <div class="list">
+        <a class="item item-icon-right" 
+           ng-repeat="k in kategoriler"
+           href="#/app/product-detail/{{ k.index }}" 
+           ng-class="{ 'item-button-right': k.sayi==0 }">
+            
+            {{ k.text }}
+            
+            <i class="icon ion-chevron-right"></i>
+            
+            <span class="badge badge-assertive"
+                  ng-show="k.sayi > 0"
+                  style="margin-right: 24px">{{ k.sayi }}</span>
+
+            <button style="margin-right: 25px"
+                    ng-show="k.sayi == 0" 
+                    ng-click="doAction(k)"
+                    class="button button-positive">Teklif Al</button>
+        </a>
+    </div>
+
+  </ion-content>
+</ion-view>

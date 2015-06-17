@@ -1,0 +1,16 @@
+﻿<ion-view title="Teklifler" ng-controller="ProposalResultCtrl as vm">
+    <ion-content padding="true" class="has-header has-footer">
+           
+        <div class="list">
+            <div class="item" ng-repeat="p in proposals" href="#/app/playlists/1">
+                <h4>{{ p.firmaAd }}</h4>
+                <h5>{{ p.urun }}</h5>
+                <div>
+                    <p ng-repeat="t in p.teklifler">
+                        {{ t.text }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
