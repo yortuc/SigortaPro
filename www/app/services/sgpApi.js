@@ -193,6 +193,7 @@
             });
         };
 
+        // *
         // hasar anında için servis noktaları getir
         var getServicesInfo = function () {
             return forgeAjax({
